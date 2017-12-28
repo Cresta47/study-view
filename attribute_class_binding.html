@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.color-red{
+			color: red;
+		}
+
+		.is-loading{ background: blue; }
+	</style>
+</head>
+<body>
+	<div id="root">
+		
+	<button :title="title">button</button>
+	<h1 :class="className">Hello</h1>
+
+	<button :class="{ 'is-loading': isLoading }" @click='toggleClass'> Click me</button>
+
+	<button :disabled="isDisabled" @click='disable'>{{status}}</button>
+	</div>
+<script src="https://unpkg.com/vue"></script>
+<script type="text/javascript">
+	new Vue({
+		el: '#root',
+		data: {
+			title: 'using vue',
+			className: 'color-red',
+			isLoading: false,
+			isDisabled: false,
+			status: 'Enabled'
+		},
+
+		methods: {
+			toggleClass(){
+				this.isLoading = true;
+			},
+
+			disable(){
+				this.isDisabled = true;
+				this.status = 'Disabled';
+			}
+		}
+	})
+</script>
+</body>
+</html>

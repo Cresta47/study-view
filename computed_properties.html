@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<style type="text/css">
+	.hidden{
+		display: none;
+	}
+</style>
+<body>
+
+<div id="root">
+	{{ reversedMessage }}
+
+	<h1>All Tasks</h1>
+	<ul>
+		<li v-for="task in tasks" v-text="task.description"></li>
+	</ul>
+
+	<h1>Completed</h1>
+	<ul>
+		<li v-for="task in completedTasks" v-text="task.description"></li>
+	</ul>
+
+	<h1>InComplete</h1>
+	<ul>
+		<li v-for="task in inCompleteTasks" v-text="task.description"></li>
+	</ul>
+
+	<h1>other</h1>
+	<button @click="all">All</button>
+	<button @click="complete">Completed</button>
+	<button @click="incomplete">Incomplete</button>
+
+	<div :class="{ 'hidden': isAllHidden }">
+		<h1>All Tasks</h1>
+		<ul>
+			<li v-for="task in tasks" v-text="task.description"></li>
+		</ul>
+	</div>
+	
+	<div :class="{ 'hidden': isCompleteHidden }">
+		<h1>Completed</h1>
+		<ul>
+			<li v-for="task in completedTasks" v-text="task.description"></li>
+		</ul>
+	</div>
+
+	<div :class="{ 'hidden': isInCompleteHidden }">
+		<h1>InComplete</h1>
+		<ul>
+			<li v-for="task in inCompleteTasks" v-text="task.description"></li>
+		</ul>
+	</div>
+</div>
+
+<script src="https://unpkg.com/vue"></script>
+<script type="text/javascript">
+	new Vue({
+		el: '#root',
+		data: {
+			message: 'Hello World',
+			isAllHidden: true,
+			isCompleteHidden: true,
+			isInCompleteHidden: true,
+			tasks: [
+				{ description: 'Go to the store', complete: true },
+				{ description: 'Finish screencast', complete:false },
+				{ description: 'Make donation', complete: false },
+				{ description: 'Clear inbox', complete: false },
+				{ description: 'Make dinner', complete: false },
+				{ description: 'Clean room', complete: true },
+			]
+		},
+		methods: {
+			all(){
+				this.isAllHidden = false;
+				this.isCompleteHidden = true;
+				 this.isInCompleteHidden = true;
+			},
+			complete(){
+				 this.isAllHidden = true;
+				 this.isCompleteHidden = false;
+				 this.isInCompleteHidden = true;
+			},
+			incomplete(){
+				 this.isAllHidden = true;
+				 this.isCompleteHidden = true;
+				 this.isInCompleteHidden = false;
+			}
+		},
+		computed: {
+			reversedMessage(){
+				return this.message.split('').reverse().join('');
+			},
+			inCompleteTasks(){
+				return this.tasks.filter(task => ! task.complete)
+			},
+			completedTasks(){
+				return this.tasks.filter(task => task.complete)
+			}
+		}
+
+	})
+</script>
+</body>
+</html>
